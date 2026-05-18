@@ -29,13 +29,35 @@ IDE chính để phát triển dự án. Yêu cầu **JDK 17+**.
 ```
 AirlineManagementSystem/
 ├── src/
-│   ├── model/       // Flight, Passenger, Ticket, Staff
-│   ├── dao/         // FlightDAO, PassengerDAO, TicketDAO
-│   ├── ui/          // MainFrame, FlightPanel, BookingPanel
-│   └── util/        // DBConnection, DateUtils
+│   ├── model/
+│   │   ├── login.java
+│   │   ├── Flight.java
+│   │   ├── aircraft.java
+│   │   ├── Passenger.java
+│   │   ├── mananger.java
+│   │   └── admin.java 
+│   │
+│   ├── dao/
+│   │   ├── FlightDAO.java
+│   │   ├── PassengerDAO.java
+│   │   ├── loginDAO.java
+│   │   └── bookingDAO.java
+│   │
+│   ├── ui/
+│   │   ├── LoginFrame.java
+│   │   ├── MainFrame.java
+│   │   ├── FlightPanel.java
+│   │   └── BookingPanel.java
+│   │
+│   └── util/
+│       ├── DBConnection.java
+│       └── DateUtils.java(neu can)
+│
 ├── db/
-│   └── airline.sql  // schema + seed data
+│   └── airline.sql
+├── Main.java
 └── .gitignore
+
 ```
 ## 2. Java Syntax
 
@@ -106,18 +128,6 @@ git commit -m "feat: thêm BookingPanel"
 git pull origin main                  # đồng bộ từ remote
 git push origin main                  # đẩy lên GitHub
 ```
-
-### Branching theo tính năng
-
-```bash
-git checkout -b feature/booking-panel   # tạo & chuyển branch
-git checkout -b fix/jdbc-null-pointer   # branch sửa lỗi
-
-git checkout main
-git merge feature/booking-panel         # merge vào main
-git branch -d feature/booking-panel     # xoá branch sau merge
-```
-
 ### Quy ước commit
 
 | Prefix | Dùng khi |
