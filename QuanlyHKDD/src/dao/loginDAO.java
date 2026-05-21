@@ -1,13 +1,12 @@
 package dao;
-import model.login;
 import util.DBConnection;
 
 import java.util.*;
 import java.sql.*;
 
 public class loginDAO {
-    private Connection connection;// Biến kết nối cơ sở dữ liệu
-    private Statement stmt;// Biến để chạy câu lệnh SQL
+    private final Connection connection;// Biến kết nối cơ sở dữ liệu
+    public Statement stmt;// Biến để chạy câu lệnh SQL
     public loginDAO() {
         try {
             connection = DBConnection.getConnection();
@@ -17,42 +16,56 @@ public class loginDAO {
         }
     }
 
-    public String exportUsername() {// Method để xuất dữ liệu từ bảng login
-        String query = "SELECT username FROM login WHERE username = '" + login.usernames + "';" ;
+    public boolean checkUsername(String USERNAME) {// Method để xuất dữ liệu từ bảng login
+        String query = "SELECT username FROM login WHERE username = '" + USERNAME + "';" ;
         try {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                return rs.getString("username");
+                if(rs.getString("username").equals(USERNAME))return true ;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return false;
     }
 
-    public String exportPassword() {// Method để xuất password từ bảng login
-        String query = "SELECT password FROM login WHERE password = '" + login.passwords + "';" ;
+    public boolean checkPassword(String PASSWORD) {// Method để xuất password từ bảng login
+        String query = "SELECT password FROM login WHERE password = '" + PASSWORD + "';" ;
         try {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                return rs.getString("password");
+                if(rs.getString("password").equals(PASSWORD)) return true;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return false;
     }
 
-//    public String importAccount() {// Method để nhapaj dữ liệu từ bảng login
-//        String query = "INSERT INTO login (username, password) VALUES ('" + login.usernames + "', '" + login.passwords + "');";
-//
-//        try{
-//            stmt.executeUpdate(query);
-//            return "Đăng ký thành công!";
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-    //can ai do fix
+    public String checkRole(String USERNAME){
+        String query = "SELECT role FROM login WHERE username = '" + USERNAME + "';" ;
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                return rs.getString("role");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return "passenger";
+    }
+
+
+
+
+    // chua loc khoang trong
+    public void importAccount(String USERNAME, String PASSWORD) {
+        String query = "INSERT INTO login (username, password, role) VALUES ('" + USERNAME + "', '" + PASSWORD + "', 3)";
+        try {
+            int rows = stmt.executeUpdate(query);// kiem tra xem co dong nao bi thay doi hay khong, neu > 0 thi dang ky thanh cong
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
