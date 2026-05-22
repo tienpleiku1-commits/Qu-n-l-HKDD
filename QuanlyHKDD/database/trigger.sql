@@ -36,3 +36,18 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+-- tu dong them id vao bang passenger
+DELIMITER $$
+
+CREATE TRIGGER after_login_insert
+AFTER INSERT ON login
+FOR EACH ROW
+BEGIN
+    IF NEW.role = 'passenger' THEN
+        INSERT INTO passenger (loginID, name, date_of_birth, passport, email)
+        VALUES (NEW.loginID, NULL, NULL, NULL, NULL);
+    END IF;
+END$$
+
+DELIMITER ;
