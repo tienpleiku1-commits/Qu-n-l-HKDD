@@ -1,7 +1,7 @@
 package dao;
+
 import util.DBConnection;
 
-import java.util.*;
 import java.sql.*;
 
 public class loginDAO {
@@ -16,7 +16,7 @@ public class loginDAO {
         }
     }
 
-    public boolean checkUsername(String USERNAME) {// Method để xuất dữ liệu từ bảng login
+    public boolean getUsername(String USERNAME) {// Method để xuất dữ liệu từ bảng login
         String query = "SELECT username FROM login WHERE username = '" + USERNAME + "';" ;
         try {
             ResultSet rs = stmt.executeQuery(query);
@@ -29,8 +29,8 @@ public class loginDAO {
         return false;
     }
 
-    public boolean checkPassword(String PASSWORD) {// Method để xuất password từ bảng login
-        String query = "SELECT password FROM login WHERE password = '" + PASSWORD + "';" ;
+    public boolean getPassword(String USERNAME, String PASSWORD) {// Method để xuất password từ bảng login
+        String query = "SELECT password FROM login WHERE username = '" + USERNAME + "';" ;
         try {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
@@ -42,7 +42,7 @@ public class loginDAO {
         return false;
     }
 
-    public String checkRole(String USERNAME){
+    public String getRole(String USERNAME){
         String query = "SELECT role FROM login WHERE username = '" + USERNAME + "';" ;
         try {
             ResultSet rs = stmt.executeQuery(query);
@@ -55,14 +55,12 @@ public class loginDAO {
         return "passenger";
     }
 
-
-
-
     // chua loc khoang trong
-    public void importAccount(String USERNAME, String PASSWORD) {
-        String query = "INSERT INTO login (username, password, role) VALUES ('" + USERNAME + "', '" + PASSWORD + "', 3)";
+    public boolean setAccount(String USERNAME, String PASSWORD) {
+        String query = "INSERT INTO login (username, password, role) VALUES ('" + USERNAME + "', '" + PASSWORD + "', 3)"+ ";";
         try {
             int rows = stmt.executeUpdate(query);// kiem tra xem co dong nao bi thay doi hay khong, neu > 0 thi dang ky thanh cong
+            return rows != 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

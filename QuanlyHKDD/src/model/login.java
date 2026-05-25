@@ -11,19 +11,18 @@ public class login {
         System.out.println("2. Đăng ký");
         System.out.println("3. Thoát");
         System.out.print("Nhập lựa chọn của bạn:");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        String choice = scanner.nextLine();
         switch (choice){
-            case 1:
+            case "1":
                 signIn();
                 break;
-            case 2:
+            case "2":
                 signUp();
                 break;
-            case 3:
+            case "3":
                 System.exit(0);
             default:
-                System.out.print("Lựa chọn không hợp lệ! Vui lòng nhập lại.");
+                System.out.println("Lựa chọn không hợp lệ! Vui lòng nhập lại.");
                 choice();
         }
     }
@@ -35,16 +34,16 @@ public class login {
         passwords = scanner.nextLine();
         loginDAO loginDAO = new loginDAO();
 
-        if(loginDAO.checkUsername(usernames)){
-            if(loginDAO.checkPassword(passwords)){
+        if(loginDAO.getUsername(usernames)){
+            if(loginDAO.getPassword(usernames,passwords)){
                 System.out.println("dang nhap thanh cong");
-                    if(loginDAO.checkRole(usernames).equals("admin")){
+                    if(loginDAO.getRole(usernames).equals("admin")){
                         // di vao gd admin
                     }
-                    else if(loginDAO.checkRole(usernames).equals("manager")){
+                    else if(loginDAO.getRole(usernames).equals("manager")){
                         // di vao manager
                     }
-                    else if(loginDAO.checkRole(usernames).equals("passenger")){
+                    else if(loginDAO.getRole(usernames).equals("passenger")){
                         // di vao passenger
                     }
             } else {
@@ -57,17 +56,17 @@ public class login {
 
     //chua co loc khoang trong
     private void signUp() {
-        System.out.println("nhap username:");
+        System.out.print("nhap username:");
         usernames = scanner.nextLine();
-        System.out.println("nhap password:");
+        System.out.print("nhap password:");
         passwords = scanner.nextLine();
         loginDAO loginDAO = new loginDAO();
 
-        if (loginDAO.checkUsername(usernames)) {
+        if (loginDAO.getUsername(usernames)) {
             System.out.println("username da ton tai, vui long chon username khac");
         } else {
-            loginDAO.importAccount(usernames, passwords);
-            System.out.println("Dang ki thanh cong");
+            if (loginDAO.setAccount(usernames, passwords))System.out.println("Dang ki thanh cong");
+            else System.out.println("khong thanh cong");
         }
     }
 }

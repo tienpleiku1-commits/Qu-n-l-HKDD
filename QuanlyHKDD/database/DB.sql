@@ -16,7 +16,7 @@ CREATE TABLE aircraft (
     name VARCHAR(45) NOT NULL,
     available BOOLEAN DEFAULT TRUE
 );
-
+-- sua data type cua take_off thanh datetime
 -- 3. Bảng flight
 CREATE TABLE flight (
     flightID INT PRIMARY KEY AUTO_INCREMENT,
@@ -36,7 +36,7 @@ CREATE TABLE passenger (
     email VARCHAR(45),
     FOREIGN KEY (loginID) REFERENCES login(loginID)
 );
-
+-- co the them trang thai
 -- 5. Bảng booking
 CREATE TABLE booking (
     bookingID INT PRIMARY KEY AUTO_INCREMENT,
